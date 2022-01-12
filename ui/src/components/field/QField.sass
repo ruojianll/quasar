@@ -14,9 +14,9 @@ $field-transition-label-right-up: .324s cubic-bezier(.4,0,.2,1)
     padding-bottom: 20px
 
   &__marginal
-    height: 56px
+    height: 30px
     color: rgba(0,0,0,.54)
-    font-size: 24px
+    font-size: 18px
 
     > * + *
       margin-left: 2px
@@ -80,9 +80,10 @@ $field-transition-label-right-up: .324s cubic-bezier(.4,0,.2,1)
   &__control
     color: $primary
     color: var(--q-color-primary)
-    height: 56px
+    height: 30px
     max-width: 100%
     outline: none
+    overflow: hidden
 
     &:before, &:after
       content: ''
@@ -110,7 +111,7 @@ $field-transition-label-right-up: .324s cubic-bezier(.4,0,.2,1)
 
   &__native, &__prefix, &__suffix, &__input
     font-weight: 400
-    line-height: 28px
+    line-height: 18px
     letter-spacing: .00937em
     text-decoration: inherit
     text-transform: inherit
@@ -148,10 +149,15 @@ $field-transition-label-right-up: .324s cubic-bezier(.4,0,.2,1)
   &__prefix, &__suffix
     transition: opacity $field-transition
     white-space: nowrap
+    background-color:#eee
   &__prefix
-    padding-right: 4px
+    padding-right: 12px
+    margin-left: -12px
+    padding-left: 12px
   &__suffix
-    padding-left: 4px
+    padding-left: 12px
+    margin-right: -12px
+    padding-right: 12px
 
   &--readonly, &--disabled
     .q-placeholder // override "disable" CSS on it
@@ -181,9 +187,9 @@ $field-transition-label-right-up: .324s cubic-bezier(.4,0,.2,1)
   &__label
     left: 0
     right: 0
-    top: 18px
+    top: 2px
     color: $input-label-color
-    font-size: 16px
+    font-size: 12px
     line-height: 20px
     font-weight: 400
     letter-spacing: .00937em
@@ -193,7 +199,7 @@ $field-transition-label-right-up: .324s cubic-bezier(.4,0,.2,1)
     transition: transform $field-transition, right $field-transition-label-right-up
 
   &--float .q-field__label
-    transform: translateY(-40%) scale(.75)
+    transform:  scale(.5)
     right: calc(-100% / 3)
     transition: transform $field-transition, right $field-transition-label-right-down
 
@@ -257,12 +263,14 @@ $field-transition-label-right-up: .324s cubic-bezier(.4,0,.2,1)
       padding: 0 12px
 
       &:before
+        z-index: 1
         border: 1px solid rgba(0,0,0,.24)
         transition: border-color $field-transition
       &:hover:before
         border-color: #000
 
       &:after
+        z-index: 1
         height: inherit
         border-radius: inherit
         border: 2px solid transparent
@@ -380,9 +388,9 @@ $field-transition-label-right-up: .324s cubic-bezier(.4,0,.2,1)
 
   &--labeled
     .q-field__native, .q-field__prefix, .q-field__suffix
-      line-height: 24px
-      padding-top: 24px
-      padding-bottom: 8px
+      line-height: 14px
+      padding-top: 14px
+      padding-bottom: 5px
 
     .q-field__shadow
       top: 0

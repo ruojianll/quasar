@@ -21,7 +21,7 @@
       <div class="text-h6">
         Standard
       </div>
-
+      
       <q-input v-bind="props" outlined v-model="text" label="Label" label-color="green">
         <div slot="label" class="ellipsis">
           Label <strong>in slot</strong> that is <em>very long</em> and might overflow the space available if the field is not long enought to hold it all

@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="q-layout-padding q-mx-auto" style="max-width: 500px">
-      <router-link to="/layout-quick/a" class="cursor-pointer row justify-center" style="margin-bottom: 25px">
-        <img src="https://cdn.quasar.dev/img/quasar-logo.png">
+      <router-link
+        to="/layout-quick/a"
+        class="cursor-pointer row justify-center"
+        style="margin-bottom: 25px"
+      >
+        <img src="https://cdn.quasar.dev/img/quasar-logo.png" />
       </router-link>
-      <div class="text-caption text-center">
-        Quasar v{{ $q.version }}
-      </div>
+      <div class="text-caption text-center">Quasar v{{ $q.version }}</div>
 
       <div class="q-pt-md">
         <q-input ref="filter" clearable outlined v-model="filter">
@@ -18,7 +20,11 @@
 
       <q-list dense class="q-mb-xl">
         <template v-for="(category, title) in filteredList">
-          <q-item-label :key="`category-${title}`" header class="q-mt-lg text-uppercase text-weight-bold">
+          <q-item-label
+            :key="`category-${title}`"
+            header
+            class="q-mt-lg text-uppercase text-weight-bold"
+          >
             {{ title }}
           </q-item-label>
 
@@ -39,128 +45,141 @@
 </template>
 
 <script>
-import pages from 'src/router/pages-list'
+import pages from "src/router/pages-list";
 
-const STORAGE_KEY = 'index-filter'
+const STORAGE_KEY = "index-filter";
 
-const list = {}
-pages.map(page => page.slice(0, page.length - 4)).forEach(page => {
-  const [folder, file] = page.split('/')
-  if (!list[folder]) {
-    list[folder] = []
-  }
-  list[folder].push({
-    route: page,
-    title: file.split(/-/).map(f => f.charAt(0).toUpperCase() + f.slice(1)).join(' ')
-  })
-})
+const list = {};
+pages
+  .map((page) => page.slice(0, page.length - 4))
+  .forEach((page) => {
+    const [folder, file] = page.split("/");
+    if (!list[folder]) {
+      list[folder] = [];
+    }
+    list[folder].push({
+      route: page,
+      title: file
+        .split(/-/)
+        .map((f) => f.charAt(0).toUpperCase() + f.slice(1))
+        .join(" "),
+    });
+  });
 
 export default {
-  created () {
-    this.list = list
+  created() {
+    this.list = list;
   },
 
-  mounted () {
-    if (process.env.MODE === 'ssr') {
-      this.clientInitStore(this.store)
+  mounted() {
+    if (process.env.MODE === "ssr") {
+      this.clientInitStore(this.store);
     }
 
-    window.addEventListener('keydown', this.onKeyup, { passive: false, capture: true })
-    this.$q.platform.is.desktop === true && this.$refs.filter.focus()
+    window.addEventListener("keydown", this.onKeyup, {
+      passive: false,
+      capture: true,
+    });
+    this.$q.platform.is.desktop === true && this.$refs.filter.focus();
   },
 
-  beforeDestroy () {
-    window.removeEventListener('keydown', this.onKeyup, { passive: false, capture: true })
+  beforeDestroy() {
+    window.removeEventListener("keydown", this.onKeyup, {
+      passive: false,
+      capture: true,
+    });
   },
 
-  data () {
-    const store = { filter: '' }
+  data() {
+    const store = { filter: "" };
 
-    if (process.env.MODE !== 'ssr') {
-      this.clientInitStore(store)
+    if (process.env.MODE !== "ssr") {
+      this.clientInitStore(store);
     }
 
-    return { store }
+    return { store };
   },
 
   computed: {
-    filteredList () {
+    filteredList() {
       if (!this.filter) {
-        return this.list
+        return this.list;
       }
 
-      const newList = {}
-      const filter = this.filter.toLowerCase()
+      const newList = {};
+      const filter = this.filter.toLowerCase();
 
-      Object.keys(this.list).forEach(categName => {
-        const filtered = this.list[categName]
-          .filter(feature => feature.title.toLowerCase().indexOf(filter) > -1)
+      Object.keys(this.list).forEach((categName) => {
+        const filtered = this.list[categName].filter(
+          (feature) => feature.title.toLowerCase().indexOf(filter) > -1
+        );
 
         if (filtered.length > 0) {
-          newList[categName] = filtered
+          newList[categName] = filtered;
         }
-      })
+      });
 
-      return newList
+      return newList;
     },
 
     filter: {
-      get () {
-        return this.store.filter
+      get() {
+        return this.store.filter;
       },
 
-      set (val) {
-        const filter = val || ''
-        this.store.filter = filter
-        this.$q.localStorage.set(STORAGE_KEY, filter)
-      }
-    }
+      set(val) {
+        const filter = val || "";
+        this.store.filter = filter;
+        this.$q.localStorage.set(STORAGE_KEY, filter);
+      },
+    },
   },
 
   methods: {
-    onKeyup (evt) {
-      if (evt.keyCode === 38) { // up
-        this.moveSelection(evt, 'previousSibling')
-      }
-      else if (evt.keyCode === 40) { // down
-        this.moveSelection(evt, 'nextSibling')
+    onKeyup(evt) {
+      if (evt.keyCode === 38) {
+        // up
+        this.moveSelection(evt, "previousSibling");
+      } else if (evt.keyCode === 40) {
+        // down
+        this.moveSelection(evt, "nextSibling");
       }
     },
 
-    moveSelection (evt, op) {
-      evt.preventDefault()
+    moveSelection(evt, op) {
+      evt.preventDefault();
 
-      let el = document.activeElement
+      let el = document.activeElement;
 
-      if (!el || el === document.body || el.tagName.toUpperCase() === 'INPUT') {
-        this.focus(document.querySelector('.q-item'))
-        return
+      if (!el || el === document.body || el.tagName.toUpperCase() === "INPUT") {
+        this.focus(document.querySelector(".q-item"));
+        return;
       }
 
       if (el[op]) {
-        do { el = el[op] }
-        while (el && el.tagName.toUpperCase() !== 'A')
+        do {
+          el = el[op];
+        } while (el && el.tagName.toUpperCase() !== "A");
 
         if (!el) {
-          this.focus(this.$refs.filter.$el)
-        }
-        else if (el.tagName.toUpperCase() === 'A') {
-          this.focus(el)
+          this.focus(this.$refs.filter.$el);
+        } else if (el.tagName.toUpperCase() === "A") {
+          this.focus(el);
         }
       }
     },
 
-    focus (el) {
-      el.focus()
-      el.scrollIntoView(false)
+    focus(el) {
+      el.focus();
+      el.scrollIntoView(false);
     },
 
-    clientInitStore (store) {
-      const filter = this.$q.localStorage.getItem(STORAGE_KEY)
+    clientInitStore(store) {
+      const filter = this.$q.localStorage.getItem(STORAGE_KEY);
       if (filter) {
-        store.filter = filter
+        store.filter = filter;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

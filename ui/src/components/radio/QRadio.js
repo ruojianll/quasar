@@ -108,12 +108,35 @@ export default Vue.extend({
   },
 
   render (h) {
+    const radientId='radioRadient'+'-'+Date.now()+'-'+Math.random()
     const content = [
       h('svg', {
         staticClass: 'q-radio__bg absolute non-selectable',
         attrs: { focusable: 'false' /* needed for IE11 */, viewBox: '0 0 24 24', 'aria-hidden': 'true' }
       }, [
+        h('defs',{},[
+          h('linearGradient',{
+            attrs:{
+              id:radientId,
+              gradientTransform:'rotate(90)'
+            }
+          },[
+            h('stop',{
+              attrs:{
+                offset:'0%',
+                'stop-color':'transparent'
+              }
+            }),
+            h('stop',{
+              attrs:{
+                offset:'100%',
+                'stop-color':'currentcolor'
+              }
+            })
+          ])
+        ]),
         h('path', {
+          style:{fill:'url(#'+radientId+')'},
           attrs: {
             d: 'M12,22a10,10 0 0 1 -10,-10a10,10 0 0 1 10,-10a10,10 0 0 1 10,10a10,10 0 0 1 -10,10m0,-22a12,12 0 0 0 -12,12a12,12 0 0 0 12,12a12,12 0 0 0 12,-12a12,12 0 0 0 -12,-12'
           }
@@ -121,6 +144,7 @@ export default Vue.extend({
 
         h('path', {
           staticClass: 'q-radio__check',
+          style:{fill:'url(#'+radientId+')'},
           attrs: {
             d: 'M12,6a6,6 0 0 0 -6,6a6,6 0 0 0 6,6a6,6 0 0 0 6,-6a6,6 0 0 0 -6,-6'
           }

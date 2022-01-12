@@ -121,7 +121,7 @@ export default {
 
 <style lang="sass">
 body
-  background: $grey-3
+  // background: $grey-3
 
 .dev-home-btn
   top: 36px

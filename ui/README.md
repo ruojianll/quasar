@@ -1,15 +1,3 @@
-# wqd styled components
-
-QInput
-
-QBtnGroup
-
-QSelect
-
-QRadio
-
-
-
 ![Quasar Framework logo](https://cdn.quasar.dev/logo-v2/header.png)
 
 # Quasar Framework UI Package
